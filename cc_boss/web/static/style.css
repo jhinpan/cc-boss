@@ -1,0 +1,261 @@
+/* cc-boss — dark theme, mobile-first */
+
+:root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --card: #0f3460;
+    --accent: #e94560;
+    --text: #eee;
+    --text-dim: #999;
+    --green: #4ade80;
+    --yellow: #facc15;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 env(safe-area-inset-bottom);
+    -webkit-text-size-adjust: 100%;
+}
+
+header {
+    background: var(--surface);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.back {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Worker chips */
+.worker-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.worker-chip {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.worker-chip.active { background: var(--green); color: #000; }
+.worker-chip.idle { background: #333; color: var(--text-dim); }
+
+/* Input */
+.input-section { padding: 12px 16px; }
+
+.input-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+#task-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 10px 12px;
+    font-size: 1rem;
+    resize: none;
+    font-family: inherit;
+}
+#task-input:focus { outline: none; border-color: var(--accent); }
+
+.btn-group { display: flex; gap: 6px; flex-direction: column; }
+
+.btn {
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+.btn:active { opacity: 0.7; }
+
+.btn-send { background: var(--accent); color: #fff; }
+.btn-plan { background: var(--blue); color: #fff; }
+.btn-voice {
+    background: var(--surface);
+    border: 1px solid #444;
+    color: var(--text);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-voice.recording { background: var(--red); border-color: var(--red); }
+.btn-approve { background: var(--green); color: #000; }
+.btn-reject { background: var(--red); color: #fff; }
+
+.btn-link {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+/* Task list */
+.task-list {
+    padding: 0 16px 24px;
+}
+.task-list h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--text-dim);
+}
+
+.task-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid transparent;
+}
+.task-card.status-pending { border-left-color: var(--text-dim); }
+.task-card.status-running { border-left-color: var(--yellow); }
+.task-card.status-done { border-left-color: var(--green); }
+.task-card.status-failed { border-left-color: var(--red); }
+.task-card.status-planned { border-left-color: var(--blue); }
+.task-card.status-planning { border-left-color: var(--yellow); }
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+.task-id { font-weight: 700; color: var(--text-dim); font-size: 0.85rem; }
+
+.badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.badge-pending { background: #333; color: var(--text-dim); }
+.badge-running { background: var(--yellow); color: #000; }
+.badge-done { background: var(--green); color: #000; }
+.badge-failed { background: var(--red); color: #fff; }
+.badge-planned { background: var(--blue); color: #fff; }
+.badge-planning { background: var(--yellow); color: #000; }
+
+.worker-tag {
+    font-size: 0.7rem;
+    background: #333;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.cost, .duration {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.task-prompt {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+
+.task-actions { display: flex; gap: 12px; }
+
+.empty { color: var(--text-dim); font-size: 0.9rem; padding: 16px 0; }
+
+/* Plan view */
+.plan-view { padding: 16px; }
+.plan-prompt { margin-bottom: 16px; }
+.plan-prompt p { color: var(--text-dim); }
+.plan-content pre {
+    background: var(--card);
+    padding: 12px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+.plan-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* Log view */
+.log-view { padding: 16px; }
+.task-meta { margin-bottom: 16px; }
+.task-meta p { margin-bottom: 4px; font-size: 0.9rem; }
+.error-text { color: var(--red); }
+
+.log-entries { display: flex; flex-direction: column; gap: 4px; }
+.log-entry {
+    background: var(--surface);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+.log-type {
+    display: inline-block;
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--blue);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+.log-ts { color: var(--text-dim); font-size: 0.7rem; }
+.log-content { margin-top: 4px; word-break: break-word; white-space: pre-wrap; }
+
+.log-tool_use .log-type { color: var(--yellow); }
+.log-tool_result .log-type { color: var(--green); }
+.log-result .log-type { color: var(--accent); }
+
+/* Live log overlay */
+.live-log {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 30vh;
+    overflow-y: auto;
+    background: rgba(15, 52, 96, 0.95);
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    display: none;
+    font-family: 'SF Mono', 'Menlo', monospace;
+}
+.live-log.visible { display: block; }
+.live-log .log-line {
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+    header h1 { font-size: 1.1rem; }
+    .btn { padding: 8px 12px; font-size: 0.8rem; }
+    .btn-group { flex-direction: row; }
+}

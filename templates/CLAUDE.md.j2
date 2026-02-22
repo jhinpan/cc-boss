@@ -1,0 +1,17 @@
+# Project: {{ project_name }}
+
+## Architecture
+{{ architecture | default("(auto-generated)") }}
+
+## Rules
+- After completing a task, append lessons learned to PROGRESS.md
+- If stuck on an error after 2 attempts, record findings in PROGRESS.md and exit
+- Do not modify CLAUDE.md
+- Write clear commit messages
+- Run tests before committing if a test suite exists
+
+## Tech Stack
+{{ tech_stack | default("(specify your stack)") }}
+
+## Context
+{{ context | default("") }}

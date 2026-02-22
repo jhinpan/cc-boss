@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#16213e">
+    <title>Logs #{{ task.id }} — cc-boss</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="back">&larr; Back</a>
+        <h1>Logs #{{ task.id }}</h1>
+        <span class="badge badge-{{ task.status }}">{{ task.status }}</span>
+    </header>
+
+    <section class="log-view">
+        <div class="task-meta">
+            <p><strong>Prompt:</strong> {{ task.prompt }}</p>
+            {% if task.cost_usd %}<p><strong>Cost:</strong> ${{ "%.4f"|format(task.cost_usd) }}</p>{% endif %}
+            {% if task.duration_s %}<p><strong>Duration:</strong> {{ "%.1f"|format(task.duration_s) }}s</p>{% endif %}
+            {% if task.error %}<p class="error-text"><strong>Error:</strong> {{ task.error }}</p>{% endif %}
+        </div>
+
+        <div class="log-entries">
+            {% for log in logs %}
+            <div class="log-entry log-{{ log.event_type }}">
+                <span class="log-type">{{ log.event_type }}</span>
+                <span class="log-ts">{{ log.ts }}</span>
+                <div class="log-content">{{ log.content[:500] }}</div>
+            </div>
+            {% endfor %}
+            {% if not logs %}
+            <p class="empty">No logs yet.</p>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

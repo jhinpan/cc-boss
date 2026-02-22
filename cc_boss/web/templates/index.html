@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#16213e">
+    <title>cc-boss</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>cc-boss</h1>
+        <div class="worker-bar">
+            {% for w in workers %}
+            <span class="worker-chip {{ 'active' if w.current_task_id else 'idle' }}"
+                  title="Worker {{ w.worker_id }}">
+                W{{ w.worker_id }}
+                {% if w.current_task_id %}#{{ w.current_task_id }}{% endif %}
+            </span>
+            {% endfor %}
+        </div>
+    </header>
+
+    <section class="input-section">
+        <form id="task-form">
+            <div class="input-row">
+                <textarea id="task-input" placeholder="Describe a task..." rows="2"></textarea>
+                <div class="btn-group">
+                    <button type="button" id="voice-btn" class="btn btn-voice" title="Hold to speak">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="23"/>
+                            <line x1="8" y1="23" x2="16" y2="23"/>
+                        </svg>
+                    </button>
+                    <button type="submit" class="btn btn-send">Send</button>
+                    <button type="button" id="plan-btn" class="btn btn-plan" title="Create plan first">Plan</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="task-list" id="task-list">
+        <h2>Tasks</h2>
+        {% for task in tasks %}
+        <div class="task-card status-{{ task.status }}" data-id="{{ task.id }}">
+            <div class="task-header">
+                <span class="task-id">#{{ task.id }}</span>
+                <span class="badge badge-{{ task.status }}">{{ task.status }}</span>
+                {% if task.worker_id is not none %}
+                <span class="worker-tag">W{{ task.worker_id }}</span>
+                {% endif %}
+                {% if task.cost_usd %}
+                <span class="cost">${{ "%.3f"|format(task.cost_usd) }}</span>
+                {% endif %}
+                {% if task.duration_s %}
+                <span class="duration">{{ "%.0f"|format(task.duration_s) }}s</span>
+                {% endif %}
+            </div>
+            <div class="task-prompt">{{ task.prompt[:120] }}{% if task.prompt|length > 120 %}...{% endif %}</div>
+            <div class="task-actions">
+                <a href="/logs/{{ task.id }}" class="btn-link">Logs</a>
+                {% if task.status == 'planned' %}
+                <a href="/plan/{{ task.id }}" class="btn-link">Review Plan</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% if not tasks %}
+        <p class="empty">No tasks yet. Type or speak a task above.</p>
+        {% endif %}
+    </section>
+
+    <div id="live-log" class="live-log"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

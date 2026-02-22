@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#16213e">
+    <title>Plan #{{ task.id }} — cc-boss</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="back">&larr; Back</a>
+        <h1>Plan #{{ task.id }}</h1>
+    </header>
+
+    <section class="plan-view">
+        <div class="plan-prompt">
+            <h3>Task</h3>
+            <p>{{ task.prompt }}</p>
+        </div>
+
+        {% if task.plan %}
+        <div class="plan-content">
+            <h3>Plan</h3>
+            <pre>{{ task.plan }}</pre>
+        </div>
+
+        <div class="plan-actions">
+            <button id="approve-btn" class="btn btn-approve" data-id="{{ task.id }}">Approve</button>
+            <button id="reject-btn" class="btn btn-reject" data-id="{{ task.id }}">Reject</button>
+        </div>
+        {% else %}
+        <p class="empty">No plan generated yet.</p>
+        <button id="gen-plan-btn" class="btn btn-send" data-id="{{ task.id }}">Generate Plan</button>
+        {% endif %}
+    </section>
+
+    <script>
+        document.getElementById('approve-btn')?.addEventListener('click', async (e) => {
+            const id = e.target.dataset.id;
+            await fetch(`/api/tasks/${id}/approve`, {method: 'POST'});
+            location.href = '/';
+        });
+        document.getElementById('reject-btn')?.addEventListener('click', async (e) => {
+            const id = e.target.dataset.id;
+            await fetch(`/api/tasks/${id}/reject`, {method: 'POST'});
+            location.href = '/';
+        });
+        document.getElementById('gen-plan-btn')?.addEventListener('click', async (e) => {
+            const id = e.target.dataset.id;
+            e.target.textContent = 'Generating...';
+            e.target.disabled = true;
+            await fetch(`/api/tasks/${id}/plan`, {method: 'POST'});
+            location.reload();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "name": "cc-boss",
+    "short_name": "cc-boss",
+    "description": "Orchestrate Claude Code instances from your phone",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#16213e",
+    "icons": []
+}
