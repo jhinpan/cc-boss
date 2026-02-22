@@ -1,6 +1,6 @@
 # cc-boss
 
-Open-source implementation of [胡渊鸣 (Yuanming Hu)](https://www.zhihu.com/people/huyuanming)'s workflow for [managing 10 Claude Code instances in parallel](https://zhuanlan.zhihu.com/p/1916905428343083648).
+Open-source implementation of [胡渊鸣 (Yuanming Hu)](https://www.zhihu.com/people/iterator)'s workflow for [managing 10 Claude Code instances in parallel](https://zhuanlan.zhihu.com/p/2007147036185744607).
 
 Orchestrate multiple Claude Code instances from a mobile-friendly web UI. Dispatch tasks from your phone, watch them execute in real-time.
 
@@ -87,7 +87,7 @@ bash deploy/cloudflared.sh
 
 ## Credits
 
-This project is an open-source implementation of the workflow described by [胡渊鸣 (Yuanming Hu)](https://www.zhihu.com/people/huyuanming) in his Zhihu post about orchestrating 10 Claude Code instances to work in parallel. The core ideas — Ralph Loop, plan-then-execute, PROGRESS.md accumulation, stream-json monitoring — come from that post.
+This project is an open-source implementation of the workflow described by [胡渊鸣 (Yuanming Hu)](https://www.zhihu.com/people/iterator) in his [Zhihu post](https://zhuanlan.zhihu.com/p/2007147036185744607) about orchestrating 10 Claude Code instances to work in parallel. The core ideas — Ralph Loop, plan-then-execute, PROGRESS.md accumulation, stream-json monitoring — come from that post.
 
 ## License
 
